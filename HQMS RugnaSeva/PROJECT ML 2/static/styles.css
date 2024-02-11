@@ -1,0 +1,107 @@
+/* Reset some default browser styles */
+body {
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+    /* background-image: linear-gradient(to bottom, rgba(0, 159, 220, 0.6), rgba(154, 194, 74, 0.6)); */
+    background: #d3e3e0;
+    background-size: cover;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+}
+
+h1 {
+    text-align: center;
+    margin-top: 20px;
+}
+
+/* Center the form */
+#forecast-form {
+    text-align: center;
+    margin-top: 20px;
+}
+
+/* Style the input field and button */
+#hour {
+    width: 50px;
+    padding: 5px;
+    margin: 0 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+button {
+    padding: 5px 10px;
+    background: linear-gradient(to right, #009fdc, #9bc34a);
+    color: #fff;
+    border: 1px solid;
+    border-color: #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+button:hover {
+    background: linear-gradient(to left, #009fdc, #9bc34a);
+    border-color: black;
+    color: black;
+
+}
+
+/* Center the result text */
+#forecast-result {
+    text-align: center;
+    margin: 20px;
+    font-size: 18px;
+}
+
+/* Style the table */
+table {
+    /* text-align: center; */
+    margin: 20px auto;
+    border-collapse:collapse;
+    width: 60%;
+    justify-content: center;
+    border: 2px solid;
+    background-color: #fff;
+    border-radius: 10px;
+    padding-bottom: 3%;
+
+}
+
+table th, table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+}
+
+table th {
+    background: #009fdc;
+    color: #fff;
+}
+
+/* Style the table rows */
+table tr:nth-child(even) {
+    /* background-color: rgb(182, 255, 255); */
+    background-color:#ddd;
+    color: black;
+}
+table tr:nth-child(odd) {
+    background-color: white;
+}
+
+table tr:hover {
+    background-color: #d3f393;
+    color: #0800ff;
+}
+
+.center {
+    position: relative;
+    display: flex;
+    padding-top: 2%;
+    margin-bottom: 5%;
+    justify-content: center;
+    align-items: center;
+    height: 60vh; /* Adjust as needed for vertical alignment */
+}   

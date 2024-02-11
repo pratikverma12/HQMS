@@ -1,0 +1,158 @@
+<!-- BOTH FORM and TABLE-->
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+    <title>Patient Count Forecast</title>
+</head>
+<div>
+    <h1>Patient Count Forecast</h1>
+
+    <form id="forecast-form">
+        <label for="hour">Select an hour:</label>
+        <input type="number" id="hour" name="hour" min="0" max="23">
+        <button type="submit">Get Forecast</button>
+    </form>
+    <p id="forecast-result"></p>
+
+    <div>
+    <table>
+        <thead>
+            <tr>
+                <th>Time (in Hours)</th>
+                <th>Forecasted Patient Count</th>
+            </tr>
+        </thead>
+        <tbody id="forecast-table-body">
+            <!-- Forecasts will be added here -->
+        </tbody>
+    </table>
+    </div>
+
+    <div class="center">
+        <img src="\static\patient_count_graph.png" alt="Patient Count Graph" />
+        <!--replace src="{{ url_for('generate_graph') }}"  src="\static\patient_count_graph.png" for any new generated graph-->
+    </div>
+
+    <script>
+        const form = document.getElementById('forecast-form');
+        const result = document.getElementById('forecast-result');
+        const tableBody = document.getElementById('forecast-table-body');
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const hour = document.getElementById('hour').value;
+
+            // Send a POST request to the Flask backend
+            const response = await fetch('/forecast', {
+                method: 'POST',
+                body: new URLSearchParams({ 'hour': hour }),
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+            });
+
+            const data = await response.json();
+            const forecastedCount = data.forecasted_count;
+
+            result.innerHTML = `Forecasted Patient Count at ${hour} hours: ${forecastedCount}`;
+        });
+
+        // Fetch all forecasts on page load and populate the table
+        window.addEventListener('load', async () => {
+            const response = await fetch('/all_forecasts');
+            const forecasts = await response.json();
+
+            forecasts.forEach((forecast) => {
+                const newRow = tableBody.insertRow(-1);
+                const hourCell = newRow.insertCell(0);
+                const countCell = newRow.insertCell(1);
+                hourCell.textContent = forecast.hour;
+                countCell.textContent = forecast.forecasted_count;
+            });
+        });
+    </script>
+</body>
+</html>
+
+
+
+
+<!-- ONLY FORM
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Patient Count Forecast</title>
+</head>
+<body>
+    <h1>Patient Count Forecast</h1>
+    <form method="POST">
+        <label for="hour">Select Hour:</label>
+        <select name="hour" id="hour">
+            <option value="9">9 AM</option>
+            <option value="10">10 AM</option>
+            <option value="11">11 AM</option>
+            <option value="12">12 PM</option>
+            <option value="13">1 PM</option>
+            <option value="14">2 PM</option>
+            <option value="15">3 PM</option>
+            <option value="16">4 PM</option>
+            <option value="17">5 PM</option>
+            <option value="18">6 PM</option>
+            <option value="19">7 PM</option>
+            <option value="20">8 PM</option>
+        </select>
+        <input type="submit" value="Get Forecast">
+    </form>
+    <div>
+        {% if forecasted %}
+            <p>Forecasted Patient Count at {{ selected_hour }}: {{ forecasted }}</p>
+        {% endif %}
+    </div>
+</body>
+</html> -->
+
+
+
+
+
+<!-- ONLY TABLE
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Forecasted Patient Counts</title>
+</head>
+<body>
+    <h1>Patient Count Forecast</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Hour</th>
+                <th>Patient Count</th>
+            </tr>
+        </thead>
+        <tbody id="forecast-table">
+
+        </tbody>
+    </table>
+    
+
+    <script>
+        fetch('/get_forecast')
+            .then(response => response.json())
+            .then(data => {
+                const forecastTable = document.getElementById('forecast-table');
+                data.forEach(item => {
+                    const row = forecastTable.insertRow();
+                    const hourCell = row.insertCell(0);
+                    const countCell = row.insertCell(1);
+                    hourCell.textContent = item.Hour;
+                    countCell.textContent = item.PatientCount;
+                });
+            })
+            .catch(error => console.error(error));
+    </script>
+</body>
+</html> -->
+
+
+
